@@ -23,7 +23,7 @@ public class tttClientTCP {
 		int fil, col;
 		boolean control = true;
 
-		System.out.println("Introduce casilla a marcar (fil,col): ");
+		System.out.print("Introduce casilla a marcar (fil,col): ");
 
 		do {
 			respuesta = capt.next();
@@ -101,11 +101,11 @@ public class tttClientTCP {
 					System.out.println(ANSI_GREEN + "Éxito." + ANSI_RESET);			
 					///////////////////////////////////////////////////////////////////////////////////////////////
 					
-					System.out.println("Buscando oponente...\n\n");
+					System.out.println("Buscando oponente...\n");
 					String tipo_ficha = inReader.readLine();
-					System.out.println(ANSI_CYAN + "###############################################");
-					System.out.println("# ¡Oponente encontrado! Pondrás las fichas " + ANSI_GREEN + tipo_ficha + ANSI_CYAN + "##");
-					System.out.println("###############################################" + ANSI_RESET);
+					System.out.println(ANSI_CYAN + "##############################################");
+					System.out.println("# ¡Oponente encontrado! Pondrás las fichas " + ANSI_GREEN + tipo_ficha + ANSI_CYAN + " #");
+					System.out.print("##############################################" + ANSI_RESET);
 
 					do{
 						turno = inReader.readLine();
