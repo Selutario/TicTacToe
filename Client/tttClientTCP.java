@@ -108,7 +108,6 @@ public class tttClientTCP {
 					System.out.println("###############################################" + ANSI_RESET);
 
 					do{
-						//outPrinter.println("still_here");
 						turno = inReader.readLine();
 						
 						if (turno.equals("your_turn")){
