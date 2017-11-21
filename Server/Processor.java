@@ -39,6 +39,10 @@ public class Processor extends Thread{
 
 	public void addPlayer(Socket socketPlayer2){
 		this.socketPlayer2 = socketPlayer2;
+
+		Random whos_first = new Random();
+		first = whos_first.nextInt(2); 
+		second = 1 - first;
 	}
 
 	public boolean ended(){
