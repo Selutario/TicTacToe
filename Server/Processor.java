@@ -20,10 +20,10 @@ public class Processor extends Thread{
 	private ArrayList<BufferedReader> inReaders = new ArrayList<BufferedReader>();
 	private boolean started = false, 
 					ended = false;
-	int first, second;
-	int dimension;
+	int first, turn;
 	String respuesta;
 	Grid ttt;
+	tttState current;
 
 	// Constructor que tiene como parámetro una referencia al socket abierto en por otra clase
 	public Processor(Socket socketPlayer1, int dimension){
@@ -41,8 +41,7 @@ public class Processor extends Thread{
 		this.socketPlayer2 = socketPlayer2;
 
 		Random whos_first = new Random();
-		first = whos_first.nextInt(2); 
-		second = 1 - first;
+		first = turn = whos_first.nextInt(2);
 	}
 
 	public boolean ended(){
@@ -70,14 +69,11 @@ public class Processor extends Thread{
 			// Obtiene los flujos de escritura/lectura - PLAYER 2
 			outPrinters.add(new PrintWriter(socketPlayer2.getOutputStream(), true));
 			inReaders.add(new BufferedReader(new InputStreamReader(socketPlayer2.getInputStream())));
+
+			outPrinters.get(turn).println("X");						
+			outPrinters.get((turn + 1) % 2).println("O");
 			
-			//########################################
-			//# EJEMPLO SIMPLE A FALTA DEL ALGORITMO #
-			//########################################
-			outPrinters.get(first).println("X");						
-			outPrinters.get(second).println("O");
-			
-			outPrinters.get(first).println("your_turn");	
+			/*outPrinters.get(first).println("your_turn");	
 			outPrinters.get(second).println("wait");
 			String respuesta = inReaders.get(first).readLine();
 			outPrinters.get(second).println(respuesta);
@@ -89,31 +85,28 @@ public class Processor extends Thread{
 
 			outPrinters.get(first).println("end_winner");
 			outPrinters.get(second).println("end_loser");
+			*/
 
+			do{				
+				outPrinters.get(turn).println("your_turn");
+				outPrinters.get(turn).println( ttt.getStringMatrix() );	
+				//outPrinters.get(second).println("wait");
+				respuesta = inReaders.get(turn).readLine();
+				ttt.updateMatrix(respuesta);
+				current = ttt.isItTheWinner( ((turn == first) ? 'X' : 'O') );
+				turn = (turn + 1) % 2;
+			}while( current == tttState.NOT_VICTORY );
 
-			// CON FUNCIONES DE GRID
-			// do{
+			if (current == tttState.VICTORY ){
+				outPrinters.get((turn + 1) % 2).println("end_winner");
+				outPrinters.get(turn).println("end_loser");
+			}
+			else {
+				outPrinters.get((turn + 1) % 2).println("end_tie");
+				outPrinters.get(turn).println("end_tie");
+			}
 
-			// 	outPrinters.get(first).println("your_turn");	
-			// 	outPrinters.get(second).println("wait");
-			// 	respuesta = inReaders.get(first).readLine();
-			// 	ttt.updateMatrix(respuesta);
-			// 	outPrinters.get(second).println( ttt.getStringMatrix() );
-	
-			// 	outPrinters.get(second).println("your_turn");	
-			// 	outPrinters.get(first).println("wait");
-			// 	respuesta = inReaders.get(second).readLine();
-			// 	ttt.updateMatrix(respuesta);
-			// 	outPrinters.get(first).println( ttt.getStringMatrix() );
-
-			// }while(ttt.IsTheWinner() == "not_ended");
-
-
-			outPrinters.get(first).println("end_winner");
-			outPrinters.get(second).println("end_loser");
 			ended = true;
-
-			
 		} catch (IOException e) {
 			System.err.println("Error al obtener los flujos de entrada/salida.");
 		}
