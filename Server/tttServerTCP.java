@@ -13,8 +13,8 @@ public class tttServerTCP {
 	private static ArrayList<Processor> games = new ArrayList<Processor>();
 
 	private static int joinGame(int dimension){
-		for (int i = 0; i< games.size(); i++){
-			if (games.get(i).getGameDimension() == dimension)
+		for (int i = 0; i < games.size(); i++){
+			if (!games.get(i).started() && games.get(i).getGameDimension() == dimension)
 				return i;
 		}
 
@@ -38,7 +38,6 @@ public class tttServerTCP {
 		int port = 8989;
 		int dimension;
 	
-
 		// Canales de comunicación
 		PrintWriter outPrinter;
 		BufferedReader inReader;
@@ -61,7 +60,6 @@ public class tttServerTCP {
 				game = joinGame(dimension);
 
 				if (game == -1){
-					System.out.println("ANTES DEL ARRAY");
 					games.add(new Processor(unSocket, dimension));
 					System.out.println("Nueva partida. Total partidas: " + games.size());	
 				}

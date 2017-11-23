@@ -62,6 +62,8 @@ public class Processor extends Thread{
 	
 	// Aquí es donde se realiza el procesamiento realmente:
 	void procesa(){	
+		started = true;
+		
 		try {
 			// Obtiene los flujos de escritura/lectura - PLAYER 1
 			outPrinters.add(new PrintWriter(socketPlayer1.getOutputStream(), true));

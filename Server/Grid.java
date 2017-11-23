@@ -57,4 +57,6 @@ public abstract class Grid {
     protected abstract boolean emptySquares();
 
     protected abstract ArrayList<ArrayList<Integer>> getSquaresCoordinates(char token);
+
+    protected abstract ArrayList<Integer> getSquares(char token);
 }

@@ -92,6 +92,20 @@ public class ttt4D extends Grid {
 
         return coordenadas;
     }
+
+    protected ArrayList<Integer> getSquares(char token){
+        ArrayList<Integer> fichas = new ArrayList<Integer>(),
+                           un_tablero;
+
+        for (int i = 0; i < 3; i++){
+            un_tablero = tableros.get(i).getSquares(token);
+
+            for (int j = 0; j < un_tablero.size(); j++)
+                fichas.add( un_tablero.get(j) + 27*i );
+        }
+
+        return fichas;
+    }
     
     public tttState isItTheWinner(char token){
         for (int i = 0; i < 3; i++){

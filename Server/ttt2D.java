@@ -65,7 +65,7 @@ public class ttt2D extends Grid {
         return j + 3*i;
     }
 
-    private ArrayList<Integer> getSquares(char token){
+    protected ArrayList<Integer> getSquares(char token){
         ArrayList<Integer> fichas = new ArrayList<Integer>();
 
         for (int i = 0; i < 3; i++){
@@ -127,12 +127,14 @@ public class ttt2D extends Grid {
                                         return tttState.VICTORY;
                                 break;
                             case 2:
-                                if (fichas.get(j) == 4)
+                                if (fichas.get(j) == 4){
                                     if (fichas.get(k) == 6)
                                         return tttState.VICTORY;
-                                else if (fichas.get(j) == 5)
+                                }
+                                else if (fichas.get(j) == 5){
                                     if (fichas.get(k) == 8)
                                         return tttState.VICTORY;
+                                }
                                 break;
                             case 3:
                                 if (fichas.get(j) == 4)
